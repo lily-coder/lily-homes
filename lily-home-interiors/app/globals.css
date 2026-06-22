@@ -1,0 +1,302 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── shadcn semantic tokens + brand font mappings ─────────────────────── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Font family mappings — next/font sets --font-playfair and --font-inter on <html> */
+  --font-display-lg: var(--font-playfair), serif;
+  --font-display-lg-mobile: var(--font-playfair), serif;
+  --font-headline-lg: var(--font-playfair), serif;
+  --font-headline-lg-mobile: var(--font-playfair), serif;
+  --font-headline-md: var(--font-playfair), serif;
+  --font-body-lg: var(--font-inter), sans-serif;
+  --font-body-md: var(--font-inter), sans-serif;
+  --font-label-md: var(--font-inter), sans-serif;
+  --font-caption: var(--font-inter), sans-serif;
+}
+
+/* ─── Brand colour tokens ───────────────────────────────────────────────── */
+@theme {
+  /* Primary */
+  --color-primary-container: #0f2744;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #798fb1;
+  --color-on-primary-fixed: #021c39;
+  --color-on-primary-fixed-variant: #324866;
+  --color-inverse-primary: #b2c8ed;
+  --color-primary-fixed: #d4e3ff;
+  --color-primary-fixed-dim: #b2c8ed;
+  --color-surface-tint: #4a5f7f;
+
+  /* Secondary (material design secondary ≠ shadcn secondary) */
+  --color-secondary-container: #e9ded0;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #696256;
+  --color-secondary-fixed: #ece1d3;
+  --color-secondary-fixed-dim: #cfc5b7;
+  --color-on-secondary-fixed: #201b12;
+  --color-on-secondary-fixed-variant: #4c463c;
+
+  /* Tertiary / Gold */
+  --color-tertiary: #1b1000;
+  --color-tertiary-container: #352300;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #a98851;
+  --color-tertiary-fixed: #ffdeaa;
+  --color-tertiary-fixed-dim: #e6c184;
+  --color-on-tertiary-fixed: #271900;
+  --color-on-tertiary-fixed-variant: #5c4211;
+  --color-gold-accent: #a98851;
+
+  /* Surface scale */
+  --color-surface: #fcf9f8;
+  --color-surface-dim: #dcd9d9;
+  --color-surface-bright: #fcf9f8;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f0eded;
+  --color-surface-container-high: #eae7e7;
+  --color-surface-container-highest: #e5e2e1;
+  --color-surface-variant: #e5e2e1;
+  --color-on-surface: #1c1b1b;
+  --color-on-surface-variant: #44474d;
+  --color-inverse-surface: #313030;
+  --color-inverse-on-surface: #f3f0ef;
+  --color-on-background: #1c1b1b;
+
+  /* Error */
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  /* Outline */
+  --color-outline: #74777e;
+  --color-outline-variant: #c4c6ce;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-base: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 24px;
+  --spacing-gutter: 24px;
+  --spacing-lg: 48px;
+  --spacing-xl: 80px;
+  --spacing-container-max: 1280px;
+
+  /* Max-width */
+  --max-width-container-max: 1280px;
+
+  /* Container scale. NOTE: the custom --spacing-{sm,md,lg,xl} tokens above
+     still shadow the named max-width utilities (e.g. `max-w-sm` resolves to
+     12px, not 24rem). These --container-* values do NOT win that collision, so
+     in components ALWAYS use arbitrary widths like `max-w-[24rem]` instead of
+     bare `max-w-{sm,md,lg,xl}`. Larger keys (2xl, 3xl…) are unaffected. */
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+
+  /* Shadows */
+  --shadow-luxury: 0 10px 30px -10px rgba(15, 39, 68, 0.08);
+  --shadow-luxury-hover: 0 20px 40px -12px rgba(15, 39, 68, 0.12);
+  --shadow-luxury-lg: 0 32px 64px rgba(15, 39, 68, 0.08);
+  --shadow-card-dark: 0 32px 64px rgba(0, 18, 41, 0.2);
+  --shadow-nav-tinted: 0 4px 24px rgba(15, 39, 68, 0.1);
+}
+
+/* ─── Override shadcn :root with brand values ───────────────────────────── */
+:root {
+  --primary: #001229;
+  --primary-foreground: #ffffff;
+  --background: #fcf9f8;
+  --foreground: #1c1b1b;
+  --card: #ffffff;
+  --card-foreground: #1c1b1b;
+  --popover: #ffffff;
+  --popover-foreground: #1c1b1b;
+  /* Brand secondary: warm brown #655d52 (used for text-secondary throughout) */
+  --secondary: #655d52;
+  --secondary-foreground: #ffffff;
+  --muted: #f0eded;
+  --muted-foreground: #44474d;
+  --accent: #f0eded;
+  --accent-foreground: #1c1b1b;
+  --destructive: #ba1a1a;
+  --border: #c4c6ce;
+  --input: #c4c6ce;
+  --ring: #0f2744;
+  --radius: 0.5rem;
+}
+
+/* ─── Custom typography utilities ───────────────────────────────────────── */
+@utility text-display-lg {
+  font-size: 72px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@utility text-display-lg-mobile {
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+@utility text-headline-lg {
+  font-size: 52px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+@utility text-headline-lg-mobile {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+@utility text-headline-md {
+  font-size: 32px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+@utility text-body-lg {
+  font-size: 18px;
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+@utility text-body-md {
+  font-size: 16px;
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+@utility text-label-md {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+@utility text-caption {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+/* ─── Component utilities ───────────────────────────────────────────────── */
+@layer components {
+  .section-spacing {
+    padding-top: clamp(80px, 10vw, 128px);
+    padding-bottom: clamp(80px, 10vw, 128px);
+  }
+
+  .nav-glass {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .hero-overlay {
+    background:
+      radial-gradient(
+        circle at center,
+        rgba(0, 18, 41, 0.35) 0%,
+        rgba(0, 18, 41, 0.65) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(0, 18, 41, 0.2) 0%,
+        rgba(0, 18, 41, 0) 35%,
+        rgba(0, 18, 41, 0.45) 100%
+      );
+  }
+
+  .input-luxury {
+    @apply w-full border-0 border-b-2 border-secondary-container bg-transparent py-4
+           text-primary placeholder:text-outline-variant
+           focus:outline-none focus:border-primary focus:ring-0
+           transition-colors duration-200;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+    font-size: inherit;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+  }
+}
+
+/* ─── Base styles ───────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor scroll so content isn't hidden behind the fixed navbar */
+    scroll-padding-top: 96px;
+    @apply overflow-x-hidden;
+  }
+
+  body {
+    @apply bg-background text-on-surface overflow-x-hidden;
+    font-family: var(--font-inter), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  /* Crisper serif display type */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-playfair), serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: rgba(169, 136, 81, 0.3);
+  }
+}
