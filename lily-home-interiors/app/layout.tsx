@@ -20,8 +20,9 @@ const inter = Inter({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://lilyhomeinteriors.com";
+const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://lilyhomeinteriors.com"
+).replace(/\/+$/, "");
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
